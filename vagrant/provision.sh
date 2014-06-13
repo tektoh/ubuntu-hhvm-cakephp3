@@ -1,16 +1,20 @@
 #!/bin/sh
 
+COMPOSER="hhvm -v ResourceLimit.SocketDefaultTimeout=30 -v Http.SlowQueryThreshold=30000 -v Eval.Jit=false /usr/local/bin/composer"
+
 if [ ! -e /share/app ]; then
   cd /share
-  yes | composer create-project -s dev cakephp/app app
+  yes | $COMPOSER create-project -s dev cakephp/app app
 else
   cd /share/app
   if [ ! -e composer.lock ]; then
-    composer install
+    $COMPOSER install
   else
-    composer update
+    $COMPOSER update
   fi
 fi
+
+mkdir -p /share/app/tmp/{logs,sessions,tests} /share/app/tmp/cache/{models,persistent,views}
 
 sudo cp /share/vagrant/cakephp.conf /etc/nginx/sites-available/cakephp.conf
 sudo ln -s -f /etc/nginx/sites-available/cakephp.conf /etc/nginx/sites-enabled/cakephp.conf

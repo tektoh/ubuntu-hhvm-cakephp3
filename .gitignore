@@ -4,7 +4,3 @@
 *.lock
 cookbooks/
 vendor/
-app/vendor/
-app/Plugin/
-app/tmp/
-!empty
