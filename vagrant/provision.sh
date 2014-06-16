@@ -14,8 +14,6 @@ else
   fi
 fi
 
-mkdir -p /share/app/tmp/{logs,sessions,tests} /share/app/tmp/cache/{models,persistent,views}
-
 sudo cp /share/vagrant/cakephp.conf /etc/nginx/sites-available/cakephp.conf
 sudo ln -s -f /etc/nginx/sites-available/cakephp.conf /etc/nginx/sites-enabled/cakephp.conf
 
