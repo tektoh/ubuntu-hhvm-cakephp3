@@ -11,7 +11,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
-  config.vm.synced_folder ".", "/share", \
+  config.vm.synced_folder "./vagrant", "/vagrant", create: true
+  config.vm.synced_folder "./app", "/var/www/app", \
     create: true, owner: 'vagrant', group: 'vagrant', \
     mount_options: ['dmode=777,fmode=666']
 
@@ -28,7 +29,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ]
     chef.json = {
       "nginx" => {
-        "default_site_enabled" => false
+        "default_site_enabled" => false,
+        "sendfile" => "off"
       },
       "mysql" => {
         "server_root_password" => "secret"
