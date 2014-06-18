@@ -12,9 +12,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
   config.vm.synced_folder "./vagrant", "/vagrant", create: true
-  config.vm.synced_folder "./app", "/var/www/app", \
-    create: true, owner: 'vagrant', group: 'vagrant', \
-    mount_options: ['dmode=777,fmode=666']
+  config.vm.synced_folder "./app", "/var/www/app", type: "rsync", \
+    create: true, rsync__auto: true, rsync__exclude: [".git/", "vendor/", "tmp/", "Plugin/"]
 
   config.omnibus.chef_version = :latest
   config.vm.provision :chef_solo do |chef|
